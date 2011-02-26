@@ -1,0 +1,28 @@
+A few improvements to Codeigniter's HTML Table library
+
+This library does a few things:
+* moves table template into a config file
+* allows you to set columns widths
+* will auto-generate column classes on cells
+* allows you to set row ids
+
+*Table Config*
+Basically, this just moves the template array into a config file. I find it more convenient to use and modify this way.
+
+*Setting Column Widths*
+You can insert your own class names by setting $this->table->classes to an array of your class names.
+
+*Setting Column Classes*
+By setting 'auto_class' (boolean) will auto-generate column classes for table cells: 'c0', 'c1', etc. 
+
+Alternately, you can insert your own class names by setting $this->table->classes to an array of your class names.
+
+Example class name generator (note: # of classes = # of columns in table):
+
+$classes = array();
+for($i = 0; $i < count($numberofcolumns); $i++ ) {
+	$classes[] = 'c'.$i;
+}
+
+*Setting row ids*
+When building your arrays of row data, include an element "row_id" => '<your_value>', this will be parsed and inserted as the row id attribute, and deleted from the array before the row cells are generated.
