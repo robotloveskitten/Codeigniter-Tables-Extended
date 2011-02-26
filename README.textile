@@ -11,24 +11,21 @@ Basically, this just moves the template array into a config file. I find it more
 
 *Setting Column Widths*
 You can insert your own class names by setting $this->table->classes to an array of your class names.
-<pre><code>
-  $this->classes = array('c0','c1','c2');
+<pre><code>  $this->widths = array('c0','c1','c2');
 </code></pre>
 
 *Setting Column Classes*
-By setting 'auto_class' (boolean) will auto-generate column classes for table cells: 'c0', 'c1', etc. 
+By setting 'auto_class' (boolean) will auto-generate column classes for table cells: 'c0', 'c1', etc. Auto class is true by default.
 
-<pre><code>
-  $this->auto_class = false;
+<pre><code>  $this->auto_class = false;
 </code></pre>
 
-
-
-Alternately, you can insert your own class names by setting $this->table->classes to an array of your class names.
+Alternately, you can insert your own class names by setting $this->table->classes to an array of class names.
+<pre><code>  $this->classes = array('first_column','col2','lastcol');
+</code></pre>
 
 Example class name generator (note: # of classes = # of columns in table):
-<pre><code>
-  $classes = array();
+<pre><code>  $classes = array();
   for($i = 0; $i < count($numberofcolumns); $i++ ) {
   	$classes[] = 'c'.$i;
   }
