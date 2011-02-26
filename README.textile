@@ -1,12 +1,15 @@
-A few improvements to Codeigniter's HTML Table library
+A few improvements to Codeigniter's HTML Table library. I really like this apparently under-appreciated library. It's very useful for formatting tabular data. However, there are very limited options for styling generated tables, so I added some features to remedy that. 
 
-This library does a few things:
+This library extends the core Table Class, letting you:
 * moves table template into a config file
 * allows you to set columns widths
 * will auto-generate column classes on cells
 * allows you to set row ids
 
-*Table Config*
+*Installation*
+Drop the class in application/libraries and the config file in application/config. The library uses the MY_ prefix to extend the core Table class, so rename if you use a different prefix. 
+
+*Table Config (optional)*
 Basically, this just moves the template array into a config file. I find it more convenient to use and modify this way.
 
 *Setting Column Widths*
@@ -24,7 +27,7 @@ Alternately, you can insert your own class names by setting $this->table->classe
 <pre><code>  $this->classes = array('first_column','col2','lastcol');
 </code></pre>
 
-Example class name generator (note: # of classes = # of columns in table):
+Example class name generator (note: # of classes == # of columns in table):
 <pre><code>  $classes = array();
   for($i = 0; $i < count($numberofcolumns); $i++ ) {
   	$classes[] = 'c'.$i;
@@ -36,4 +39,4 @@ When building your arrays of row data, include an element "row_id" => '<your_val
 <pre><code>  $table_rows[] = array('row_id => 'row4', 'cell' => 'value');
 </code></pre>
 
-
+Have fun!
