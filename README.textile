@@ -33,3 +33,7 @@ Example class name generator (note: # of classes = # of columns in table):
 
 *Setting row ids*
 When building your arrays of row data, include an element "row_id" => '<your_value>', this will be parsed and inserted as the row id attribute, and deleted from the array before the row cells are generated.
+<pre><code>  $table_rows[] = array('row_id => 'row4', 'cell' => 'value');
+</code></pre>
+
+
