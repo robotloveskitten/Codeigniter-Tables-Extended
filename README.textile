@@ -4,7 +4,7 @@ This library extends the core Table Class, letting you:
 * moves table template into a config file
 * allows you to set columns widths
 * will auto-generate column classes on cells
-* allows you to set row ids
+* allows you to set row ids and classes
 
 *Installation*
 Drop the class in application/libraries and the config file in application/config. The library uses the MY_ prefix to extend the core Table class, so rename if you use a different prefix. 
@@ -38,5 +38,11 @@ Example class name generator (note: # of classes == # of columns in table):
 When building your arrays of row data, include an element "row_id" => '<your_value>', this will be parsed and inserted as the row id attribute, and deleted from the array before the row cells are generated.
 <pre><code>  $table_rows[] = array('row_id => 'row4', 'cell' => 'value');
 </code></pre>
+
+*Setting row classes*
+When building your arrays of row data, include an element "row_class" => '<your_value>', this will be parsed and inserted as the row class attribute, and deleted from the array before the row cells are generated.
+<pre><code>  $table_rows[] = array('row_class => 'green', 'cell1' => 'value', 'cell2' => 'value');
+</code></pre>
+
 
 Have fun!

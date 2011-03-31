@@ -100,7 +100,7 @@ class MY_Table extends CI_Table {
 			{
 				$temp = $this->template['heading_cell_start'];
         
-//TTB MOD --------------------
+        // MOD --------------------
         // add in column classes and widths in THEAD cells
 				if( ! empty($this->widths[$key]))
 					$temp = str_replace('<th', "<th width='{$this->widths[$key]}'", $temp);
@@ -116,7 +116,7 @@ class MY_Table extends CI_Table {
 
 				if( ! empty ($this->classes[$key]))
 				  $temp = str_replace('<th', "<th class='{$this->classes[$key]}'", $temp);
-//TTB MOD END  ---------------
+        // MOD END  ---------------
 
   			foreach ($heading as $key => $val)
 				{
@@ -156,9 +156,9 @@ class MY_Table extends CI_Table {
 
 				$rowtemp = $this->template['row_'.$name.'start'];
 			
-//TTB MOD --------------------
-				// see if we're passing row_id
+        // MOD --------------------
 				if( array_key_exists('row_id', $row) ) {
+  				// see if we're passing row_id, if so add it to tr tag
 					$row_id = $row['row_id']['data'];
 					unset($row['row_id']);
 
@@ -166,7 +166,26 @@ class MY_Table extends CI_Table {
 					$replace = "{$find} id='tr-{$row_id}' ";
 					$rowtemp = str_replace($find, $replace, $rowtemp);
 				}
-//TTB MOD END--------------------
+
+				// see if we're passing row_class, if so add it to tr tag
+				if( array_key_exists('row_class', $row) ) {
+					$row_class = $row['row_class']['data'];
+					unset($row['row_class']);
+          
+          // look for a class attribute first
+					$find = "(class=[\"\'])";
+					$replace = '$1'.$row_class." ";
+					$rowtemp = preg_replace($find, $replace, $rowtemp,-1,$count);
+          // otherwise, add it to the tr tag
+          if(empty($count))
+          {
+  					$find = "/(\<tr)/";
+  					$replace = '$1 class="'.$row_class.'"';
+  					$rowtemp = preg_replace($find, $replace, $rowtemp);
+          }
+
+				}
+        // MOD END--------------------
         
         $out .= $rowtemp . $this->newline;
 	
@@ -175,13 +194,17 @@ class MY_Table extends CI_Table {
 				{
           $temp =  $this->template['cell_'.$name.'start'];
 
-//TTB MOD --------------------
-          // add classes to cells
+          // MOD --------------------
+          // if we didn't do heading, then add widths to first row of cells
+          if( ! empty($this->widths[$key]) && count($this->heading) == 0 && $j == 0)
+	          $temp = str_replace('<td', "<td width='{$this->widths[$key]}'", $temp);
+
+          // now add our classes to cells
 					if( ! empty ($this->classes[$j])) {
 						$temp = str_replace('<td', "<td class='{$this->classes[$j]}'", $temp);
 					}
 					$j++;
-//TTB MOD END --------------------
+          // MOD END --------------------
 
 					foreach ($cell as $key => $val)
 					{
@@ -228,37 +251,5 @@ class MY_Table extends CI_Table {
 		return $out;
 	}
 	
-
-
-
-	function _default_template()
-	{
-		return  array (
-						'table_open'			=> '<table border="0" cellpadding="4" cellspacing="0">',
-
-						'thead_open'			=> '<thead>',
-						'thead_close'			=> '</thead>',
-
-						'heading_row_start'		=> '<tr>',
-						'heading_row_end'		=> '</tr>',
-						'heading_cell_start'	=> '<th>',
-						'heading_cell_end'		=> '</th>',
-
-						'tbody_open'			=> '<tbody>',
-						'tbody_close'			=> '</tbody>',
-
-						'row_start'				=> '<tr>',
-						'row_end'				=> '</tr>',
-						'cell_start'			=> '<td>',
-						'cell_end'				=> '</td>',
-
-						'row_alt_start'		=> '<tr>',
-						'row_alt_end'			=> '</tr>',
-						'cell_alt_start'		=> '<td>',
-						'cell_alt_end'			=> '</td>',
-
-						'table_close'			=> '</table>'
-					);
-	}
 
 }
