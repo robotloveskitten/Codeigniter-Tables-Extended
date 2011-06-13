@@ -19,6 +19,23 @@ class MY_Table extends CI_Table {
 	}
 		
 
+
+	/**
+	 * Set the template
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	void
+	 */
+	function set_template($template)
+	{
+		if ( ! is_array($template))
+		{
+			return FALSE;
+		}
+
+		$this->template = array_merge($this->template, $template);
+	}
 	// --------------------------------------------------------------------
 
 	/**
@@ -48,6 +65,7 @@ class MY_Table extends CI_Table {
 
 	function generate($table_data = NULL)
 	{
+	  
 		// The table data can optionally be passed to this function
 		// either as a database result object or an array
 		if ( ! is_null($table_data))
@@ -173,14 +191,14 @@ class MY_Table extends CI_Table {
 					unset($row['row_class']);
           
           // look for a class attribute first
-					$find = "(class=[\"\'])";
-					$replace = '$1'.$row_class." ";
+					$find = "/(class=[\"\'])/";
+					$replace = "$1{$row_class} ";
 					$rowtemp = preg_replace($find, $replace, $rowtemp,-1,$count);
           // otherwise, add it to the tr tag
           if(empty($count))
           {
   					$find = "/(\<tr)/";
-  					$replace = '$1 class="'.$row_class.'"';
+  					$replace = '<tr class="'.$row_class.'"';
   					$rowtemp = preg_replace($find, $replace, $rowtemp);
           }
 
